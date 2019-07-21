@@ -1,18 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <my-header/>
+    
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import MyHeader from './components/MyHeader';
 export default {
-  name: 'app',
-}
+  name: "app",
+  methods: {
+    linkGen(pageNum) {
+      return pageNum === 1 ? "?" : `?page=${pageNum}`;
+    }
+  },
+  data: function() {
+    return {
+      pages: 10
+    };
+  },
+  components: {
+    MyHeader
+  }
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
