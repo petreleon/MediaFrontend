@@ -8,6 +8,7 @@
 
 <script>
 import MediaService from '../services/MediaService'
+import {tableFields} from '../config/tableView';
 
 export default {
   mounted:function(){
@@ -26,7 +27,7 @@ export default {
       perPage:10,
       rows:100,
       table:{
-        fields: ["UsageClass","CheckoutType","MaterialType","CheckoutYear","CheckoutMonth","Checkouts","Title","Creator","Subjects","Publisher","PublicationYear"],
+        fields:tableFields,
         items: [
         ]
       }
