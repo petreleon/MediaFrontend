@@ -17,9 +17,7 @@ export default {
     MediaService.countMedia().then(response => {
       this.rows = response.data;
     });
-    MediaService.getMedias().then(response => {
-      this.table.items = response.data;
-    });
+    this.update();
   },
   data:function(){
     return{
@@ -40,6 +38,11 @@ export default {
         query: { ...this.$route.query,
             page: pageNum }
       }
+    },
+    update(){
+      MediaService.getMedias(this.$route.query.page,this.$route.query.name,this.$route.query.order).then(response => {
+        this.table.items = response.data;
+      });
     }
   },
   computed:{
@@ -48,10 +51,8 @@ export default {
     }
   },
   watch:{
-    '$route.query.page':function() {
-      MediaService.getMediasbyPage(this.$route.query.page).then(response => {
-        this.table.items = response.data;
-      });
+    '$route.query':function() {
+      this.update();
     }
   }
 }

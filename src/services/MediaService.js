@@ -10,8 +10,20 @@ const apiClient = axios.create({
 })
 
 export default {
-  getMedias() {
-    return apiClient.get('/media')
+  getMedias(page, name, order) {
+    let composedString = '/media?';
+    let queries = []; 
+    if (page) {
+      composedString += `page=${page}`
+    }
+    if (name) {
+      composedString += `name=${name}`
+    }
+    if (order) {
+      composedString += `order=${order}`
+    }
+    composedString += queries.join('&');
+    return apiClient.get(composedString);
   }, 
   getMediasbyPage(page) {
     return apiClient.get('/media?page='+(page-1))
