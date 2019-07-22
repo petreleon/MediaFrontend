@@ -11,9 +11,15 @@ const apiClient = axios.create({
 
 export default {
   getMedias() {
-    return apiClient.get('/events')
+    return apiClient.get('/media')
+  }, 
+  getMediasbyPage(page) {
+    return apiClient.get('/media?page='+(page-1))
+  },
+  countMedia(){
+    return apiClient.get('/media/count');
   },
   getMedia(id) {
-    return apiClient.get('/events/' + id)
+    return apiClient.get('/media/' + id)
   }
 }
