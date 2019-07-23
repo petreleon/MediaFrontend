@@ -1,63 +1,72 @@
 <template>
   <div>
-     <b-pagination-nav :link-gen="linkGen" :number-of-pages="pages" use-router></b-pagination-nav>
-     <b-table striped hover :items="table.items" :fields="table.fields"></b-table>
+    <b-pagination-nav :link-gen="linkGen" :number-of-pages="pages" use-router></b-pagination-nav>
+    <b-table striped hover :items="table.items" :fields="table.fields"></b-table>
     <p>{{$route.query.page||1}}</p>
   </div>
 </template>
 
 <script>
-import MediaService from '../services/MediaService'
-import {tableFields} from '../config/tableView';
+import MediaService from "../services/MediaService";
+import { MainTableFields } from "../config/tableView";
 
 export default {
-  mounted:function(){
-  
-
+  mounted: function() {
     MediaService.countMedia().then(response => {
       this.rows = response.data;
     });
-    this.update();
+    this.update(this.$route);
   },
-  data:function(){
-    return{
+  data: function() {
+    return {
       //currentPage:1,
-      perPage:10,
-      rows:100,
-      table:{
-        fields:tableFields,
-        items: [
-        ]
+      perPage: 10,
+      rows: 100,
+      table: {
+        fields: MainTableFields,
+        items: []
       }
-    }
+    };
   },
   methods: {
     linkGen(pageNum) {
-      return {
-        path: '/',
-        query: { ...this.$route.query,
-            page: pageNum }
+      if (!this.$route.query.page && pageNum == 1) {
+        return {
+          path: "/",
+          query: { ...this.$route.query }
+        };
       }
+      return {
+        path: "/",
+        query: {
+          ...this.$route.query,
+          page: pageNum
+        }
+      };
     },
-    update(){
-      MediaService.getMedias(this.$route.query.page,this.$route.query.name,this.$route.query.order).then(response => {
+    update(to) {
+      console.log(to);
+      MediaService.getMedias(
+        to.query.page,
+        to.query.name,
+        to.query.order
+      ).then(response => {
         this.table.items = response.data;
       });
     }
   },
-  computed:{
-    pages:function(){
-      return Math.floor(((this.rows+this.perPage-1)/this.perPage));
+  computed: {
+    pages: function() {
+      return Math.floor((this.rows + this.perPage - 1) / this.perPage);
     }
   },
-  watch:{
-    '$route.query':function() {
-      this.update();
-    }
+  beforeRouteUpdate: function (to, from, next) {
+    this.update(to);
+    window.scrollTo(0, 0);
+    next();
   }
-}
+};
 </script>
 
 <style>
-
 </style>
