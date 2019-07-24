@@ -33,5 +33,8 @@ export default {
   },
   getMedia(id) {
     return apiClient.get('/media/' + id)
+  },
+  getPublisher(name){
+    return apiClient.get(`http://localhost:3000/publisher?name=${name}`)
   }
 }

@@ -1,2 +1,3 @@
 var MainTableFields = ["UsageClass", "CheckoutType", "MaterialType", "CheckoutYear", "CheckoutMonth", "Checkouts", "Title", "Creator", "Subjects", "Publisher", "PublicationYear"]
-export { MainTableFields };
+var PublisherTableFields = ["title", 'year'];
+export { MainTableFields, PublisherTableFields };
