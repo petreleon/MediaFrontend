@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 import InputForm from './components/InputForm.vue';
 import DisplayMedia from './components/DisplayMedia.vue';
 import DisplayPublisher from './components/DisplayPublisher';
+import DisplayPublishers from './components/DisplayPublishers';
 
 const router = new VueRouter({
   routes: [
@@ -13,7 +14,7 @@ const router = new VueRouter({
     // no edit because these are aggregations on top of the media collection
     { path: '/creator', component: DisplayMedia },
     { path: '/creator/:name', component: DisplayMedia },
-    { path: '/publisher', component: DisplayPublisher },
+    { path: '/publisher', component: DisplayPublishers },
     { path: '/publisher/:name', component: DisplayPublisher }
 
     // if you want to delete then all of the media items that have a certain

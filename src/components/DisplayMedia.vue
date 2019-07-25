@@ -45,7 +45,7 @@ export default {
       };
     },
     update(to) {
-      console.log(to);
+      //console.log(to);
       MediaService.getMedias(
         to.query.page,
         to.query.name,

@@ -4,37 +4,49 @@
 
 <script>
 import MediaService from "../services/MediaService";
-import { PublisherTableFields } from "../config/tableView";
+import {
+  PublisherTableFields,
+  PublishersTableFields
+} from "../config/tableView";
 export default {
-  mounted:function(){
+  mounted: function() {
     this.update(this.$route.params.name);
   },
-  data:function(){
+  data: function() {
     return {
-      publisher:'', 
+      publisher: "",
       table: {
         fields: PublisherTableFields,
         items: []
       }
+    };
+  },
+  methods: {
+    update(name) {
+      if (name) {
+        MediaService.getPublisher(name).then(response => {
+          //console.log(response);
+          this.table.fields = PublisherTableFields;
+          this.table.items = response.data[0].publications;
+          this.publisher = response.data[0].Publisher;
+        });
+      }
+      else{
+        MediaService.getPublishers().then(response => {
+          //console.log(response);
+          this.table.fields = PublishersTableFields;
+          this.table.items = response.data;
+        });
+      }
     }
   },
-  methods:{
-    update(name){
-      MediaService.getPublisher(name).then(response=>{
-        console.log(response);
-        this.table.items = response.data[0].publications;
-        this.publisher = response.data[0].Publisher;
-      })
-    }
-  },
-  beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     // react to route changes...
     this.update(to.params.name);
-    next()
+    next();
   }
-}
+};
 </script>
 
 <style>
-
 </style>

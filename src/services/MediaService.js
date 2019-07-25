@@ -36,5 +36,9 @@ export default {
   },
   getPublisher(name){
     return apiClient.get(`http://localhost:3000/publisher?name=${name}`)
+  },
+  getPublishers() {
+    return apiClient.get(`http://localhost:3000/publisher`)
   }
+
 }
